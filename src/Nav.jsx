@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import CreatePostBtn from "./CreatePostBtn";
-import HomeBtn from "./homeBtn";
+import HomeBtn from "./HomeBtn";
 import { useAuth } from "./AuthContext";
 export default function Nav(props) {
   const { logout } = useAuth();
