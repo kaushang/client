@@ -38,7 +38,7 @@ export default function Post(props) {
 
     try {
       setIsLiking(true);
-      const response = await fetch(`/api/like/${props.postData._id}`, {
+      const response = await fetch(`https://server-71hv.onrender.com/api/like/${props.postData._id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: props.user._id }),
@@ -61,7 +61,7 @@ export default function Post(props) {
   const comment = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch(`/api/comment/${props.postData._id}`, {
+      const response = await fetch(`https://server-71hv.onrender.com/api/comment/${props.postData._id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -94,7 +94,7 @@ export default function Post(props) {
 
   async function deletePost(postId) {
     try {
-      const response = await fetch(`/api/delete/${postId}`, {
+      const response = await fetch(`https://server-71hv.onrender.com/api/delete/${postId}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });

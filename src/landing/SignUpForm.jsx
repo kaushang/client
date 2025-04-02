@@ -16,7 +16,7 @@ function SignUpForm({ switchForm }) {
 
     const submit = document.getElementById("submit");
     submit.removeAttribute("disabled");
-    const url = "/api/create";
+    const url = "https://server-71hv.onrender.com/api/create";
     const data = {
       email: document.querySelector('input[name="email"]').value,
       username: document.querySelector('input[name="username"]').value,

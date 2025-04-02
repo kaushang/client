@@ -35,7 +35,7 @@ export default function Nav(props) {
     });
   }
   async function handleLogout() {
-    const response = await fetch("/api/logout", {
+    const response = await fetch("https://server-71hv.onrender.com/api/logout", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -34,7 +34,7 @@ export default function Comment(props) {
       if (!initialPostData?._id) return;
 
       try {
-        const response = await fetch(`/api/post/${initialPostData._id}`);
+        const response = await fetch(`https://server-71hv.onrender.com/api/post/${initialPostData._id}`);
         const updatedPost = await response.json();
 
         if (response.ok) {
@@ -77,30 +77,11 @@ export default function Comment(props) {
       menu.classList.remove("show");
     });
   }
-
-  // async function handleComment(event) {
-  //   event.preventDefault();
-  //   if (comment === "") return;
-  //   const content = comment;
-  //   const response = await fetch(`/api/comment/${postData._id}`, {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ content }),
-  //   });
-  //   const result = await response.json();
-  //   if (response.ok) {
-  //     setPostData(result.comment);
-  //     setComments(result.comment.comments.length);
-  //     setComment("");
-  //   } else {
-  //     alert("Failed to post comment.");
-  //   }
-  // }
   async function handleComment(event) {
     event.preventDefault();
     if (comment === "") return;
     const content = comment;
-    const response = await fetch(`/api/comment/${postData._id}`, {
+    const response = await fetch(`https://server-71hv.onrender.com/api/comment/${postData._id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content }),
@@ -120,7 +101,7 @@ export default function Comment(props) {
   }
 
   async function deleteComment(commentId) {
-    const response = await fetch(`/api/delete/comment/${postData._id}`, {
+    const response = await fetch(`https://server-71hv.onrender.com/api/delete/comment/${postData._id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ commentId }),

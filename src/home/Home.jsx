@@ -17,7 +17,7 @@ export default function Home() {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("/api/home", {
+        const response = await fetch("https://server-71hv.onrender.com/api/home", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
