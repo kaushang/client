@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import CreatePostBtn from "./createPostBtn";
+import CreatePostBtn from "./CeatePostBtn";
 import HomeBtn from "./homeBtn";
 import { useAuth } from "./AuthContext";
 export default function Nav(props) {
