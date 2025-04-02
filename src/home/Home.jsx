@@ -13,7 +13,44 @@ export default function Home() {
   // loading state
   const [isLoading, setIsLoading] = useState(true);
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       const response = await fetch(
+  //         "https://server-71hv.onrender.com/api/home",
+  //         {
+  //           method: "GET",
+  //           credentials: "include",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+
+  //       const data = await response.json();
+
+  //       if (response.ok) {
+  //         setUser(data.user || null);
+  //         setPosts(data.posts || []);
+  //       } else {
+  //         console.error("Error fetching data:", data.message);
+  //         // Redirect to login if unauthorized
+  //         if (response.status === 401) {
+  //           navigate("/");
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
   useEffect(() => {
+    let isMounted = true; // ✅ Prevent state update after unmount
+
     const fetchData = async () => {
       try {
         setIsLoading(true);
@@ -28,6 +65,8 @@ export default function Home() {
           }
         );
 
+        if (!isMounted) return; // ✅ Stop execution if unmounted
+
         const data = await response.json();
 
         if (response.ok) {
@@ -35,19 +74,23 @@ export default function Home() {
           setPosts(data.posts || []);
         } else {
           console.error("Error fetching data:", data.message);
-          // Redirect to login if unauthorized
           if (response.status === 401) {
             navigate("/");
           }
         }
       } catch (error) {
-        console.error(error);
+        console.error("Error:", error);
       } finally {
-        setIsLoading(false);
+        if (isMounted) setIsLoading(false);
       }
     };
+
     fetchData();
-  }, []);
+
+    return () => {
+      isMounted = false; // ✅ Cleanup function to prevent memory leak
+    };
+  }, []); // ✅ No dependencies to prevent unnecessary re-renders
 
   const handlePostDelete = (deletedPostId) => {
     setPosts((prevPosts) =>
