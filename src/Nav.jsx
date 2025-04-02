@@ -36,6 +36,7 @@ export default function Nav(props) {
   }
   async function handleLogout() {
     const response = await fetch("https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/logout", {
+    // const response = await fetch("/api/logout", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

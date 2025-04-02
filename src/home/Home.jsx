@@ -56,6 +56,7 @@ export default function Home() {
         setIsLoading(true);
         const response = await fetch(
           "https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/home",
+          // "/api/home",
           {
             method: "GET",
             credentials: "include",

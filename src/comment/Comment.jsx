@@ -35,6 +35,7 @@ export default function Comment(props) {
 
       try {
         const response = await fetch(`https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/post/${initialPostData._id}`);
+        // const response = await fetch(`/api/post/${initialPostData._id}`);
         const updatedPost = await response.json();
 
         if (response.ok) {
@@ -82,6 +83,7 @@ export default function Comment(props) {
     if (comment === "") return;
     const content = comment;
     const response = await fetch(`https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/comment/${postData._id}`, {
+    // const response = await fetch(`/api/comment/${postData._id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content }),
@@ -102,6 +104,7 @@ export default function Comment(props) {
 
   async function deleteComment(commentId) {
     const response = await fetch(`https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/delete/comment/${postData._id}`, {
+    // const response = await fetch(`/api/delete/comment/${postData._id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ commentId }),

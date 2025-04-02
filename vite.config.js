@@ -9,7 +9,8 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      '/api': 'https://server-71hv.onrender.com'
+      // '/api': 'https://server-71hv.onrender.com'
+      '/api': 'http://localhost:3000/'
     },
   },
 })

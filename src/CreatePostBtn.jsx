@@ -7,6 +7,7 @@ export default function createPostBtn() {
   async function handleCreatePost () {
       try {
         const response = await fetch(`https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/post`, {
+        // const response = await fetch(`/api/post`, {
           method:"GET",
           headers: { "Content-Type": "application/json" }
         });
