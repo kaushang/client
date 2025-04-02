@@ -20,7 +20,7 @@ function LogInForm({ switchForm }) {
       return (errorMessage.current.textContent = "Please fill all the fields");
     }
 
-    const response = await fetch("https://server-71hv.onrender.com/api/login", {
+    const response = await fetch("https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

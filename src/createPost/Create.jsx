@@ -25,7 +25,7 @@ export default function Create() {
     const fetchPostData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("https://server-71hv.onrender.com/api/post");
+        const response = await fetch("https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/post");
         if (response.ok) {
           const data = await response.json();
           setPostsArray(data.posts);
@@ -67,7 +67,7 @@ export default function Create() {
     
     const content = post;
     try {
-      const response = await fetch("https://server-71hv.onrender.com/api/post", {
+      const response = await fetch("https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/post", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content }),
