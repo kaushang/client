@@ -17,18 +17,22 @@ export default function Home() {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("https://server-71hv.onrender.com/api/home", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          "https://server-71hv.onrender.com/api/home",
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         const data = await response.json();
 
         if (response.ok) {
-          setUser(data.user);
-          setPosts(data.posts);
+          setUser(data.user || null);
+          setPosts(data.posts || []);
         } else {
           console.error("Error fetching data:", data.message);
           // Redirect to login if unauthorized
@@ -46,12 +50,20 @@ export default function Home() {
   }, [navigate]);
 
   const handlePostDelete = (deletedPostId) => {
-    setPosts((prevPosts) => prevPosts.filter((post) => post._id !== deletedPostId));
+    setPosts((prevPosts) =>
+      prevPosts.filter((post) => post._id !== deletedPostId)
+    );
   };
 
   if (isLoading) {
     return (
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <Nav page={"home"} />
         <div className="main-cont">
           <p className="loading">Loading posts...</p>
@@ -61,7 +73,9 @@ export default function Home() {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <Nav page={"home"} />
       <div className="main-cont">
         {posts.length > 0 ? (
@@ -76,7 +90,11 @@ export default function Home() {
                 postData={element}
                 initialComments={element.comments ? element.comments.length : 0}
                 initialLikes={element.likes ? element.likes.length : 0}
-                isLiked={user && element.likes ? element.likes.includes(user._id) : false}
+                isLiked={
+                  user && element.likes
+                    ? element.likes.includes(user?._id)
+                    : false
+                }
                 onPostDelete={handlePostDelete}
               />
             ))
