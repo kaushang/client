@@ -25,7 +25,11 @@ export default function Create() {
     const fetchPostData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("https://server-71hv.onrender.com/api/post");
+        const response = await fetch("https://server-71hv.onrender.com/api/post", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        });
         // const response = await fetch("/api/post");
         if (response.ok) {
           const data = await response.json();
@@ -73,6 +77,7 @@ export default function Create() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content }),
+        credentials: "include",
       });
 
       const data = await response.json();

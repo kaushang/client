@@ -34,7 +34,11 @@ export default function Comment(props) {
       if (!initialPostData?._id) return;
 
       try {
-        const response = await fetch(`https://server-71hv.onrender.com/api/post/${initialPostData._id}`);
+        const response = await fetch(`https://server-71hv.onrender.com/api/post/${initialPostData._id}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        });
         // const response = await fetch(`/api/post/${initialPostData._id}`);
         const updatedPost = await response.json();
 
@@ -86,6 +90,7 @@ export default function Comment(props) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content }),
+      credentials: "include",
     });
     const result = await response.json();
     if (response.ok) {
@@ -106,6 +111,7 @@ export default function Comment(props) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ commentId }),
+      credentials: "include",
     });
     const result = await response.json();
     if (response.ok) {

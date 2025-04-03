@@ -43,6 +43,7 @@ export default function Post(props) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: props.user._id }),
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -66,6 +67,7 @@ export default function Post(props) {
       // const response = await fetch(`/api/comment/${props.postData._id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
 
       const data = await response.json();
@@ -100,6 +102,7 @@ export default function Post(props) {
       // const response = await fetch(`/api/delete/${postId}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
       const result = await response.json();
       
