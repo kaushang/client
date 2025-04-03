@@ -9,7 +9,8 @@ export default function createPostBtn() {
         const response = await fetch(`https://server-71hv.onrender.com/api/post`, {
         // const response = await fetch(`/api/post`, {
           method:"GET",
-          headers: { "Content-Type": "application/json" }
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
         });
         const data = await response.json();
 
