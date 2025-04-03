@@ -18,7 +18,7 @@ export default function Home() {
       try {
         setIsLoading(true);
         const response = await fetch(
-          "https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/home",
+          "https://server-71hv.onrender.com/api/home",
           // "/api/home",
           {
             method: "GET",

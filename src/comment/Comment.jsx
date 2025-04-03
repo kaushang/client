@@ -34,7 +34,7 @@ export default function Comment(props) {
       if (!initialPostData?._id) return;
 
       try {
-        const response = await fetch(`https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/post/${initialPostData._id}`);
+        const response = await fetch(`https://server-71hv.onrender.com/api/post/${initialPostData._id}`);
         // const response = await fetch(`/api/post/${initialPostData._id}`);
         const updatedPost = await response.json();
 
@@ -81,7 +81,7 @@ export default function Comment(props) {
     event.preventDefault();
     if (comment === "") return;
     const content = comment;
-    const response = await fetch(`https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/comment/${postData._id}`, {
+    const response = await fetch(`https://server-71hv.onrender.com/api/comment/${postData._id}`, {
     // const response = await fetch(`/api/comment/${postData._id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -101,7 +101,7 @@ export default function Comment(props) {
   }
 
   async function deleteComment(commentId) {
-    const response = await fetch(`https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/delete/comment/${postData._id}`, {
+    const response = await fetch(`https://server-71hv.onrender.com/api/delete/comment/${postData._id}`, {
     // const response = await fetch(`/api/delete/comment/${postData._id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

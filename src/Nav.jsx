@@ -35,7 +35,7 @@ export default function Nav(props) {
     });
   }
   async function handleLogout() {
-    const response = await fetch("https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/logout", {
+    const response = await fetch("https://server-71hv.onrender.com/api/logout", {
     // const response = await fetch("/api/logout", {
       method: "GET",
       headers: {
@@ -58,10 +58,6 @@ export default function Nav(props) {
     document.getElementById("logout").style.display = "none";
   }
 
-  // const handleLogout = () => {
-  //   logout();
-  //   // The RequireAuth component will automatically redirect to landing
-  // };
   return (
     <>
       <div id="logout" className="modal">

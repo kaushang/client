@@ -6,6 +6,5 @@ import Comment from './comment/Comment'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App/>
-    {/* <Comment /> */}
   </StrictMode>,
 )
