@@ -104,7 +104,6 @@ export default function Post(props) {
       const result = await response.json();
       
       if (response.ok) {
-        console.log("post deleted");
         // Call a callback function from props to notify parent
         if (props.onPostDelete) {
           props.onPostDelete(postId);
@@ -124,7 +123,7 @@ export default function Post(props) {
     <>
       <div className="post">
 
-        {props.postData.user.username === props.user.username && (props.page !== "comment" || props.page === "create") ? (
+        {(props.postData.user.username === props.user.username && props.page !== "comment") || props.page === "create" ? (
           <div className="menu-container postComment">
             <h5 className="content user-name" id="comment-text">
               @{props.postData.user.username}
@@ -149,12 +148,6 @@ export default function Post(props) {
             @{props.postData.user.username}
           </h5>
         )}
-
-
-
-        {/* <h5 className="content user-name">
-          @{props.postData.user.username || props.user.username}
-        </h5> */}
 
         <p className="content">{props.postData.content || props.content}</p>
 

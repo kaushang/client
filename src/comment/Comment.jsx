@@ -39,7 +39,6 @@ export default function Comment(props) {
         const updatedPost = await response.json();
 
         if (response.ok) {
-          console.log(updatedPost.post);
           setPostData(updatedPost.post);
           setComments(updatedPost.post.comments.length);
         }
@@ -90,7 +89,6 @@ export default function Comment(props) {
     });
     const result = await response.json();
     if (response.ok) {
-      // Update only the comments field instead of replacing the entire postData
       setPostData((prevPostData) => ({
         ...prevPostData,
         comments: result.comment.comments,

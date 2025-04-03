@@ -78,7 +78,6 @@ export default function Create() {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("API Response:", data.posts);
         setPostsArray([...data.posts]);
         setPost("");
       } else if (response.status === 401) {

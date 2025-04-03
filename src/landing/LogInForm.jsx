@@ -19,7 +19,6 @@ function LogInForm({ switchForm }) {
     if (data.email === "" || data.password === "") {
       return (errorMessage.current.textContent = "Please fill all the fields");
     }
-
     const response = await fetch("https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/login", {
     // const response = await fetch("/api/login", {
       method: "POST",
@@ -30,7 +29,6 @@ function LogInForm({ switchForm }) {
     const result = await response.json();
     if (response.ok) {
       console.log("user verified");
-      // Store the token in auth context instead of just navigating
       login(result.token); // Add this line to store the token
       navigate("/home");
     } else {
@@ -67,7 +65,7 @@ function LogInForm({ switchForm }) {
               switchForm();
             }}
           >
-          Sign Up
+            Sign Up
           </a>
         </strong>
       </p>

@@ -16,8 +16,8 @@ function SignUpForm({ switchForm }) {
 
     const submit = document.getElementById("submit");
     submit.removeAttribute("disabled");
-    // const url = "https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/create";
-    const url = "/api/create";
+    const url = "https://memoir-git-main-kaushang-suryas-projects.vercel.app/api/create";
+    // const url = "/api/create";
     const data = {
       email: document.querySelector('input[name="email"]').value,
       username: document.querySelector('input[name="username"]').value,
