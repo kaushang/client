@@ -30,22 +30,24 @@ form {
 }
 #site-name {
   width: 100%;
-  font-size: 52px;
+  font-size: 36px;
+  font-weight: 600;
   background-color: #253a82;
   color: #c9e4ff;
 }
 .tag-line {
+  margin-top: -10px;
   width: 100%;
-  font-size: medium;
   background-color: #253a82;
   color: #c9e4ff;
 }
 #logo,
 #logo-home {
+  font-weight: 600;
+  font-size: 36px;
   color: #253a82;
   background-color: #eaeaea;
-  padding: 20px 0px 0px 20px;
-  font-size: 44px;
+  margin: 20px 0px 0px 20px;
 }
 #logo-home {
   padding: 0px;
@@ -121,15 +123,16 @@ input {
 .post-content::placeholder {
   color: #c9e4ff8e;
 }
-input::placeholder {
-  color: #253a82;
-}
 input {
   color: black;
   border: 1px solid #253a82;
-  height: 42px;
   margin-bottom: 10px;
   background-color: #ffffff00;
+  font-size: 15px;
+  height: 38px;
+}
+input::placeholder {
+  color: #253a82;
 }
 
 .submit-form {
@@ -196,7 +199,8 @@ input {
     padding: 20px 0px 0px 8px;
   }
   .site-name {
-    font-weight: 700;
+    margin-bottom: 0px;
+    font-weight: 100;
     height: 2px;
     width: 100%;
     display: flex;
@@ -208,10 +212,6 @@ input {
     width: 100%;
   }
 
-  input {
-    font-size: 14px;
-    height: 38px;
-  }
 
   .submit-form {
     font-size: 14px;
@@ -220,6 +220,9 @@ input {
 
   .login {
     font-size: 12px;
+  }
+  #logo{
+    margin-left: 20px;
   }
 }
 

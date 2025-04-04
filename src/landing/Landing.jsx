@@ -20,7 +20,7 @@ function Landing() {
       </nav>
       <div className="form-section">
         <div className="form-section-child">
-          <p id="site-name">memoir</p>
+          <h2 id="site-name">memoir</h2>
           <p className="tag-line">Your thoughts, Your space</p>
         </div>
         {showSignUp ? (
