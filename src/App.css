@@ -41,13 +41,20 @@ form {
   background-color: #253a82;
   color: #c9e4ff;
 }
+.form-group {
+  background-color: #c9e4ff;
+  position: relative;
+  padding-top: 6px;
+  margin: 0px;
+  /* margin-bottom: 10px; */
+}
 #logo,
 #logo-home {
   font-weight: 600;
   font-size: 36px;
   color: #253a82;
   background-color: #eaeaea;
-  margin: 20px 0px 0px 20px;
+  padding: 20px 0px 0px 20px;
 }
 #logo-home {
   padding: 0px;
@@ -128,11 +135,24 @@ input {
   border: 1px solid #253a82;
   margin-bottom: 10px;
   background-color: #ffffff00;
-  font-size: 15px;
+  font-size: 16px;
   height: 38px;
+  width: 100%;
+  /* padding: 10px 35px 10px 10px; */
 }
 input::placeholder {
   color: #253a82;
+}
+.icons-no, .icons-yes {
+  background-color: #c9e4ff;
+  position: absolute;
+  right: 10px;
+  top: 16px; /* adjust based on input height */
+  color: #a72828;
+  font-size: 20px;
+}
+.icons-yes {
+  color: green;
 }
 
 .submit-form {
@@ -222,7 +242,7 @@ input::placeholder {
     font-size: 12px;
   }
   #logo{
-    margin-left: 20px;
+    padding-left: 20px;
   }
 }
 
@@ -675,5 +695,5 @@ button {
   margin-bottom: -4px;
 }
 .disable {
-  opacity: 0.5;
+  opacity: 0.6;
 }
