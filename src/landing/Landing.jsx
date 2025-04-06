@@ -14,21 +14,16 @@ function Landing() {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const response = await fetch("https://server-71hv.onrender.com/api/auth",
-          {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch("https://server-71hv.onrender.com/api/auth", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
         if (response.ok) {
           navigate("/home", { state: { from: location }, replace: true });
-        } else {
-          if (response.status === 404) {
-            navigate("/");
-          }
         }
       } catch (error) {
         console.error("Error:", error);
