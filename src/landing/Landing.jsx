@@ -12,9 +12,14 @@ function Landing() {
   const [showSignUp, setShowSignUp] = useState(true);
 
   useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/home", { state: { from: location }, replace: true });
+      return; // Exit early if authenticated
+    }
+
     const checkAuthentication = async () => {
       try {
-        const response = await fetch("https://server-71hv.onrender.com/api/auth", {
+        const response = await fetch("/api/auth", {
           method: "GET",
           credentials: "include",
           headers: {
@@ -25,6 +30,7 @@ function Landing() {
         if (response.ok) {
           navigate("/home", { state: { from: location }, replace: true });
         }
+        // Removed the navigation to "/" to prevent infinite loop
       } catch (error) {
         console.error("Error:", error);
       }
@@ -32,7 +38,7 @@ function Landing() {
 
     // Call the authentication check function
     checkAuthentication();
-  }, [navigate, location]);
+  }, [isAuthenticated, navigate, location]);
 
   return (
     <div className="auth">
