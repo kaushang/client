@@ -19,7 +19,7 @@ function Landing() {
 
     const checkAuthentication = async () => {
       try {
-        const response = await fetch("/api/auth", {
+        const response = await fetch("https://server-71hv.onrender.com/api/auth", {
           method: "GET",
           credentials: "include",
           headers: {
