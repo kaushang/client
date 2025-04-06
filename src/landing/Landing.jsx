@@ -6,39 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 
 function Landing() {
-  const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
   const [showSignUp, setShowSignUp] = useState(true);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/home", { state: { from: location }, replace: true });
-      return; // Exit early if authenticated
-    }
-
-    const checkAuthentication = async () => {
-      try {
-        const response = await fetch("https://server-71hv.onrender.com/api/auth", {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        if (response.ok) {
-          navigate("/home", { state: { from: location }, replace: true });
-        }
-        // Removed the navigation to "/" to prevent infinite loop
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-
-    // Call the authentication check function
-    checkAuthentication();
-  }, [isAuthenticated, navigate, location]);
 
   return (
     <div className="auth">
