@@ -26,11 +26,11 @@ export default function Create() {
       try {
         setIsLoading(true);
         const response = await fetch("https://server-71hv.onrender.com/api/post", {
+        // const response = await fetch("/api/post", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
         });
-        // const response = await fetch("/api/post");
         if (response.ok) {
           const data = await response.json();
           setPostsArray(data.posts);

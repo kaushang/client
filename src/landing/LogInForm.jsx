@@ -123,6 +123,7 @@ function LogInForm({ switchForm }) {
     errorMessage.current.textContent = "";
     
     const url = "https://server-71hv.onrender.com/api/login";
+    // const url = "/api/login";
 
     const data = {
       email: formData.email,

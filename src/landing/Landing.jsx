@@ -11,6 +11,34 @@ function Landing() {
   const location = useLocation();
   const [showSignUp, setShowSignUp] = useState(true);
 
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        const response = await fetch("/api/auth",
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.ok) {
+          navigate("/home", { state: { from: location }, replace: true });
+        } else {
+          if (response.status === 404) {
+            navigate("/");
+          }
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    // Call the authentication check function
+    checkAuthentication();
+  }, [navigate, location]);
+
   return (
     <div className="auth">
       <nav>
