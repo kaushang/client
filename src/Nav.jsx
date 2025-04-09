@@ -83,7 +83,7 @@ export default function Nav(props) {
       </div>
 
       <nav className="nav-bar">
-        <h5 id="logo-home">memoir</h5>
+        <h5 id="logo-home">Memoir</h5>
         <div className="nav-items options">
           {props.page === "home" ? <CreatePostBtn /> : <HomeBtn />}
 

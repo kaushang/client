@@ -1,10 +1,11 @@
 import React from "react";
 import Nav from "../Nav";
 import Post from "../home/Post";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 
 export default function Comment(props) {
+  const navigate = useNavigate();
   const location = useLocation();
   const commentBtn = useRef(null);
   const {
@@ -18,16 +19,7 @@ export default function Comment(props) {
   const [comment, setComment] = useState("");
   const [postData, setPostData] = useState(initialPostData);
   const [comments, setComments] = useState(initialComments);
-
-  useEffect(() => {
-    if (comment === "") {
-      commentBtn.current.classList.add("disable");
-      commentBtn.current.setAttribute("disabled", "true");
-    } else {
-      commentBtn.current.classList.remove("disable");
-      commentBtn.current.removeAttribute("disabled");
-    }
-  }, [comment]);
+  const [loading, setLoading] = useState(false); // Add loading state
 
   useEffect(() => {
     async function fetchPostData() {
@@ -81,27 +73,39 @@ export default function Comment(props) {
       menu.classList.remove("show");
     });
   }
+
   async function handleComment(event) {
     event.preventDefault();
+    setLoading(true); // Show loading animation
+    commentBtn.current.setAttribute("disabled", true); // Disable the button
     if (comment === "") return;
     const content = comment;
-    const response = await fetch(`https://server-71hv.onrender.com/api/comment/${postData._id}`, {
-    // const response = await fetch(`/api/comment/${postData._id}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content }),
-      credentials: "include",
-    });
-    const result = await response.json();
-    if (response.ok) {
-      setPostData((prevPostData) => ({
-        ...prevPostData,
-        comments: result.comment.comments,
-      }));
-      setComments(result.comment.comments.length);
-      setComment("");
-    } else {
-      alert("Failed to post comment.");
+    try {
+      const response = await fetch(`https://server-71hv.onrender.com/api/comment/${postData._id}`, {
+      // const response = await fetch(`/api/comment/${postData._id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content }),
+        credentials: "include",
+      });
+      const result = await response.json();
+      if (response.ok) {
+        setPostData((prevPostData) => ({
+          ...prevPostData,
+          comments: result.comment.comments,
+        }));
+        setComments(result.comment.comments.length);
+        setComment("");
+      } else {
+        if(response.status === 401) {
+          navigate('/');
+        }
+      }
+    } catch (error) {
+      console.error("Error commenting post:", error);
+    } finally {
+      setLoading(false); // Stop loading animation
+      commentBtn.current.removeAttribute("disabled"); // Re-enable button
     }
   }
 
@@ -151,7 +155,7 @@ export default function Comment(props) {
             >
               <textarea
                 required
-                rows="3"
+                rows="4"
                 id="comment"
                 className="post-content"
                 placeholder="Post your comment"
@@ -159,15 +163,21 @@ export default function Comment(props) {
                 value={comment}
                 onChange={handleChange}
               ></textarea>
-              <input
+              <button
                 ref={commentBtn}
+                className={`submit-form post-submit reply ${
+                  comment === "" ? "disable" : ""
+                }`}
                 onClick={handleComment}
-                className="post-submit submit-form reply"
-                id="reply"
-                style={{ marginTop: "12px" }}
-                type="submit"
-                value="Comment"
-              />
+                type="button"
+                disabled={comment === ""}
+              >
+                {loading ? (
+                  <div className="spinner-invert inside-btn"></div>
+                ) : (
+                  "Comment"
+                )}
+              </button>
             </form>
           </div>
 

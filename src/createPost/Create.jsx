@@ -13,6 +13,7 @@ export default function Create() {
   const [post, setPost] = useState("");
   const [postsArray, setPostsArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Add loading state
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function Create() {
         if (response.ok) {
           const data = await response.json();
           setPostsArray(data.posts);
-        } else if (response.status >=400 ) {
+        } else if (response.status >= 400) {
           // Unauthorized - redirect to landing
           navigate("/");
         }
@@ -53,23 +54,13 @@ export default function Create() {
   const handleChange = (event) => {
     setPost(event.target.value);
   };
-  
-  useEffect(() => {
-    if (postBtn.current) {
-      if (post === "") {
-        postBtn.current.classList.add("disable");
-        postBtn.current.setAttribute("disabled", "true");
-      } else {
-        postBtn.current.classList.remove("disable");
-        postBtn.current.removeAttribute("disabled");
-      }
-    }
-  }, [post]);
 
   async function createPost(event) {
     event.preventDefault();
+    setLoading(true); // Show loading animation
+    postBtn.current.setAttribute("disabled", true); // Disable the button
     if (post === "" || !isAuthenticated) return;
-    
+
     const content = post;
     try {
       const response = await fetch("https://server-71hv.onrender.com/api/post", {
@@ -91,6 +82,9 @@ export default function Create() {
       }
     } catch (error) {
       console.error("Error creating post:", error);
+    } finally {
+      setLoading(false); // Stop loading animation
+      postBtn.current.removeAttribute("disabled"); // Re-enable button
     }
   }
 
@@ -104,7 +98,13 @@ export default function Create() {
   // Show loading while checking authentication
   if (isAuthenticated === null || isLoading) {
     return (
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <Nav />
         <div className="main-cont">
           <p className="loading">Loading...</p>
@@ -139,14 +139,21 @@ export default function Create() {
                 value={post}
                 onChange={handleChange}
               ></textarea>
-              <input
+
+              <button
                 ref={postBtn}
+                className={`submit-form post-submit reply ${post === "" ? "disable" : ""}`}
                 onClick={createPost}
-                className="submit-form post-submit reply"
                 id="submit"
-                type="submit"
-                value="Create Post"
-              />
+                type="button"
+                disabled={post === ""}
+              >
+                {loading ? (
+                  <div className="spinner-invert inside-btn"></div>
+                ) : (
+                  "Create Post"
+                )}
+              </button>
             </form>
           </div>
           <div className="posts">
@@ -156,23 +163,29 @@ export default function Create() {
               <p className="sub-heading">Your posts</p>
             )}
 
-            {postsArray.slice().reverse().map((element, index) => {
-              const currentUser = user || {};
-              const isLiked = element.likes && currentUser._id ? element.likes.includes(currentUser._id) : false;
-              
-              return (
-                <Post
-                  page="create"
-                  key={index}
-                  user={currentUser}
-                  postData={element}
-                  initialComments={element.comments?.length || 0}
-                  initialLikes={(element.likes || []).length}
-                  isLiked={isLiked}
-                  onPostDelete={handlePostDelete}
-                />
-              );
-            })}
+            {postsArray
+              .slice()
+              .reverse()
+              .map((element, index) => {
+                const currentUser = user || {};
+                const isLiked =
+                  element.likes && currentUser._id
+                    ? element.likes.includes(currentUser._id)
+                    : false;
+
+                return (
+                  <Post
+                    page="create"
+                    key={index}
+                    user={currentUser}
+                    postData={element}
+                    initialComments={element.comments?.length || 0}
+                    initialLikes={(element.likes || []).length}
+                    isLiked={isLiked}
+                    onPostDelete={handlePostDelete}
+                  />
+                );
+              })}
           </div>
         </div>
       </div>

@@ -16,6 +16,7 @@ function SignUpForm({ switchForm }) {
   const nameIcon = useRef(null);
   const submitBtn = useRef(null);
   const { login } = useAuth(); // Add this to access the login function
+  const [loading, setLoading] = useState(false); // Add loading state
 
   // keep tracks of each input fields in the form and stores the value of each field
   const [formData, setFormData] = useState({
@@ -172,7 +173,8 @@ function SignUpForm({ switchForm }) {
   //Create account function: Executes when submit button is clicked
   async function createAcc(event) {
     event.preventDefault();
-
+    setLoading(true); // Show loading animation
+    submitBtn.current.setAttribute("disabled", true); // Disable the button
     errorMessage.current.textContent = "";
 
     const url = "https://server-71hv.onrender.com/api/create";
@@ -183,23 +185,30 @@ function SignUpForm({ switchForm }) {
       name: formData.username,
       password: formData.password,
     };
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        credentials: "include",
+      });
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-      credentials: "include",
-    });
+      const result = await response.json();
 
-    const result = await response.json();
-
-    if (response.ok) {
-      login(result.token); // Add this line to store the token
-      navigate("/home");
-    } else {
-      errorMessage.current.textContent = result.message;
+      if (response.ok) {
+        login(result.token); // Add this line to store the token
+        navigate("/home");
+      } else {
+        errorMessage.current.textContent = result.message;
+      }
+    } catch (error) {
+      errorMessage.current.textContent =
+        "Something went wrong. Please try again.";
+    } finally {
+      setLoading(false); // Stop loading animation
+      submitBtn.current.removeAttribute("disabled"); // Re-enable button
     }
   }
 
@@ -273,14 +282,20 @@ function SignUpForm({ switchForm }) {
 
       <span ref={errorMessage} id="errorMessage"></span>
 
-      <input
+      <button
         ref={submitBtn}
-        className="disable submit-form"
-        id="submit"
+        className="submit-form"
         onClick={createAcc}
+        id="submit"
         type="button"
-        value="Create Account"
-      />
+        disabled={loading}
+      >
+        {loading ? (
+          <div className="spinner inside-btn"></div>
+        ) : (
+          "Create Account"
+        )}
+      </button>
 
       <p className="login">
         Already have an account? &nbsp;

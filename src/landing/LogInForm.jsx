@@ -11,6 +11,7 @@ function LogInForm({ switchForm }) {
   const passwordIcon = useRef(null);
   const submitBtn = useRef(null);
   const { login } = useAuth(); // Add this to access the login function
+  const [loading, setLoading] = useState(false); // Add loading state
 
   // keep tracks of each input fields in the form and stores the value of each field
   const [formData, setFormData] = useState({
@@ -119,9 +120,9 @@ function LogInForm({ switchForm }) {
 
   async function check(event) {
     event.preventDefault();
-
+    setLoading(true); // Show loading animation
+    submitBtn.current.setAttribute("disabled", true); // Disable the button
     errorMessage.current.textContent = "";
-    
     const url = "https://server-71hv.onrender.com/api/login";
     // const url = "/api/login";
 
@@ -129,21 +130,28 @@ function LogInForm({ switchForm }) {
       email: formData.email,
       password: formData.password,
     };
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+        credentials: "include",
+      });
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-      credentials: "include",
-    });
-
-    const result = await response.json();
-    if (response.ok) {
-      console.log("user verified");
-      login(result.token); // Add this line to store the token
-      navigate("/home");
-    } else {
-      errorMessage.current.textContent = result.message;
+      const result = await response.json();
+      if (response.ok) {
+        console.log("user verified");
+        login(result.token); // Add this line to store the token
+        navigate("/home");
+      } else {
+        errorMessage.current.textContent = result.message;
+      }
+    } catch (error) {
+      errorMessage.current.textContent =
+        "Something went wrong. Please try again.";
+    } finally {
+      setLoading(false); // Stop loading animation
+      submitBtn.current.removeAttribute("disabled"); // Re-enable button
     }
   }
 
@@ -184,14 +192,16 @@ function LogInForm({ switchForm }) {
 
       <span ref={errorMessage} id="errorMessage"></span>
 
-      <input
+      <button
         ref={submitBtn}
-        className="submit-form disable"
+        className="submit-form"
         onClick={check}
         id="submit"
         type="button"
-        value="Log In"
-      />
+        disabled={loading}
+      >
+        {loading ? <div className="spinner inside-btn"></div> : "Log In"}
+      </button>
 
       <p className="login">
         Don't have an account? &nbsp;

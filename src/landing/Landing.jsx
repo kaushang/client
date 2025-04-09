@@ -11,13 +11,13 @@ function Landing() {
   return (
     <div className="auth">
       <nav>
-        <h1 id="logo" className="tag-line">
-          memoir
+        <h1 id="logo">
+          Memoir
         </h1>
       </nav>
       <div className="form-section">
         <div className="form-section-child">
-          <h2 id="site-name">memoir</h2>
+          <h2 id="site-name">Memoir</h2>
           <p className="tag-line">Your thoughts, Your space</p>
         </div>
         {showSignUp ? (

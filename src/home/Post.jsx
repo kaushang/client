@@ -46,8 +46,8 @@ export default function Post(props) {
         credentials: "include",
       });
 
-      if (!response.ok) {
-        throw new Error("Like/unlike failed");
+      if (!response.ok && response.status === 401) {
+        navigate("/");
       }
       const data = await response.json();
 
@@ -105,7 +105,7 @@ export default function Post(props) {
         credentials: "include",
       });
       const result = await response.json();
-      
+
       if (response.ok) {
         // Call a callback function from props to notify parent
         if (props.onPostDelete) {
@@ -125,8 +125,9 @@ export default function Post(props) {
   return (
     <>
       <div className="post">
-
-        {(props.postData.user.username === props.user.username && props.page !== "comment") || props.page === "create" ? (
+        {(props.postData.user.username === props.user.username &&
+          props.page !== "comment") ||
+        props.page === "create" ? (
           <div className="menu-container postComment">
             <h5 className="content user-name" id="comment-text">
               @{props.postData.user.username}
