@@ -350,10 +350,10 @@ section {
 }
 
 .modal-content {
-  background-color: #253a82;
+  background-color: #c9e4ff;
   margin: 13vh auto;
   padding: 20px;
-  height: 74%;
+  height: 4%;
   width: fit-content;
   min-width: 300px;
   /* min-width: 460px; */
@@ -372,8 +372,8 @@ section {
 h2,
 h3 {
   margin: 0px 0px 20px 0px;
-  color: #c9e4ff;
-  background-color: #253a82
+  color: #253a82;
+  background-color: #c9e4ff
 }
 
 .close {
@@ -399,8 +399,8 @@ h3 {
 
 #logout .btns {
   margin-top: 10px;
-  /* background-color: #c9e4ff; */
   background-color: #253a82 ;
+  background-color: #c9e4ff;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -424,7 +424,7 @@ h3 {
   flex-direction: column;
   justify-content: space-around;
   margin: 42vh  auto;
-  height: 16vh;
+  height: 20vh;
 }
 #logout-heading {
   margin: 0px;
