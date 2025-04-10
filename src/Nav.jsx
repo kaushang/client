@@ -62,7 +62,7 @@ export default function Nav(props) {
     <>
       <div id="logout" className="modal">
         <div className="modal-content alert1">
-          <h2>Are you sure you want to log out?</h2>
+          <h2 id="logout-heading">Log out of your account?</h2>
           <div className="btns">
             <input
               onClick={close}
