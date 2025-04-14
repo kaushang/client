@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CreatePostBtn from "./CreatePostBtn";
 import HomeBtn from "./HomeBtn";
 import { useAuth } from "./AuthContext";
+
 export default function Nav(props) {
+  const modal = useRef(null);
   const { logout } = useAuth();
   const navigate = useNavigate();
   function toggleMenu(event) {
     event.stopPropagation();
     closeAllMenus();
-    let menuContainer = event.target.closest(".menu-container");
-    let dropdown = menuContainer.querySelector(".menu-dropdown");
+    const menuContainer = event.target.closest(".menu-container");
+    const dropdown = menuContainer.querySelector(".menu-dropdown");
     dropdown.classList.toggle("show");
   }
 
@@ -26,14 +28,14 @@ export default function Nav(props) {
 
   function logoutBox(event) {
     event.preventDefault();
-    const modal = document.querySelector(".modal");
-    modal.style.display = "block";
-    window.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.style.display = "none";
-      }
-    });
+    modal.current.style.display = "block";
+    modal.current.classList.add("fadeIn");
   }
+  window.addEventListener("click", (e) => {
+    if (e.target === modal.current) {
+      close(); // Close the modal if clicked outside
+    }
+  });
   async function handleLogout() {
     const response = await fetch("https://server-71hv.onrender.com/api/logout", {
     // const response = await fetch("/api/logout", {
@@ -41,6 +43,7 @@ export default function Nav(props) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
 
     console.log("Response: ", response);
@@ -55,12 +58,16 @@ export default function Nav(props) {
     }
   }
   function close() {
-    document.getElementById("logout").style.display = "none";
+    modal.current.classList.add("fadeOut"); // Add fade-out animation class
+    setTimeout(() => {
+      modal.current.style.display = "none"; // Hide the modal after animation
+      modal.current.classList.remove("fadeOut"); // Remove animation class
+    }, 500); // Match the duration of the animation
   }
 
   return (
     <>
-      <div id="logout" className="modal">
+      <div id="logout" className="modal" ref={modal}>
         <div className="modal-content alert1">
           <h2 id="logout-heading">Log out of your account?</h2>
           <div className="btns">
@@ -87,7 +94,9 @@ export default function Nav(props) {
         <div className="nav-items options">
           {props.page === "home" ? <CreatePostBtn /> : <HomeBtn />}
 
-          <div className="menu-container">
+          <i class="fa-solid fa-right-from-bracket" onClick={logoutBox}></i>
+
+          {/* <div className="menu-container">
             <div>
               <i
                 className="fa-solid fa-bars hamburger-button"
@@ -95,13 +104,15 @@ export default function Nav(props) {
               ></i>
             </div>
             <div className="menu-dropdown" id="menu">
-              {/* <a href="/account">Account</a> */}
-              {/* <button id="home-logout" onClick={handleLogout}>Logout</button> */}
-              <a id="home-logout" onClick={logoutBox} href="#">
-                Log out
-              </a>
+              {/* <button id="home-logout">
+                 Account
+              </button> *
+              <button id="home-logout" onClick={logoutBox}>
+                 Log out
+              </button>
             </div>
-          </div>
+          </div> */}
+
         </div>
       </nav>
     </>
