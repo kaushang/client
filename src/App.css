@@ -479,7 +479,7 @@ h3 {
   flex-direction: row;
 }
 .submit-form {
-  width: 32%;
+  width: 100%;
 }
 @media (max-width: 1024px) {
   .main-cont,
